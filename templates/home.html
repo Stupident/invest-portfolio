@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolder</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+
+<body>
+  <img src="{{ url_for('static', filename= 'src/mainName.png') }}">
+  <div id="id01" class="modal">
+        <div  class="modal-content animate">
+            <h2>Add new investment</h2>
+          <form  action="{{ url_for('add_assets') }}" method="post">
+
+            <div class="field-wrap">
+                <input type="hidden" name="addcur_login" value="{{ login }}"/>
+                <label>
+                    Currency
+                </label>
+                <input type="text" required list="currencies" name="addcur_cur"/>
+                <datalist id="currencies">
+                    <option value="bitcoin">
+                    <option value="ethereum">
+                    <option value="pancakeswap-token">
+                    <option value="hoge-finance">
+                    <option value="binancecoin">
+                    <option value="bloktopia">
+                    <option value="dexioprotocol">
+                    <option value="ripple">
+                    <option value="dia-data">
+                    <option value="solana">
+                    <option value="trust-wallet-token">
+                    <option value="1inch">
+                    <option value="cardano">
+                </datalist>
+            </div>
+
+            <div class="field-wrap">
+                <label>
+                    Price
+                </label>
+                <input type="text"required autocomplete="new-password" name="addcur_price" />
+            </div>
+
+            <div class="field-wrap">
+                <label>
+                    Amount
+                </label>
+                <input type="text"required autocomplete="new-password" name="addcur_amount" />
+            </div>
+
+            <button class="button button-block"/>Add</button>
+
+            </form>
+        </div>
+  </div>
+  <div class="portfolder">
+
+    <table class="table-all">
+        <tr class="row"><td class="head">Deposit</td><td class="head">Balance</td><td class="head">PnL</td><td class="head">PnL %</td><td id="td-addassets" colspan="4" rowspan="2">{{ addassets }}</td><td id="td-button" rowspan="2"><button id="b01" class="button" onclick="document.getElementById('id01').style.display='block'">Add investment</button></td></tr>
+        <tr class="row"><td>{{ deposit }}</td><td>{{ balance }}</td><td>{{ pnl }}</td><td>{{ pnl_percent }} %</td></tr>
+
+    </table>
+
+
+
+    <table class="table">
+        <tr class="head row"><td> title </td> <td> amount </td> <td> price  </td> <td> current price  </td>
+            <td> value  </td><td> current value  </td><td> PnL </td><td> PnL % </td></tr>
+        {% for token in tokens %}
+            <tr class="row"><td> {{ token["title"] }} </td> <td> {{ token["amount"] }} </td> <td> {{ token["price"] }} USD </td> <td> {{ token["curprice"] }} USD </td>
+            <td> {{ token["value"] }} USD </td><td> {{ token["curvalue"] }} USD </td><td> {{ token["pnl"] }} USD </td><td> {{ token["pnl_percent"] }} % </td></tr>
+        {% endfor %}
+
+    </table>
+
+
+
+  </div>
+
+  <script src="{{ url_for('static', filename= 'js/index.js') }}"></script>
+
+</body>
+</html>
